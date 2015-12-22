@@ -544,7 +544,7 @@
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->
-            <!--<section class="col-lg-7 connectedSortable">
+            <section class="col-lg-7 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
               <!--<div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
@@ -765,7 +765,7 @@
                 <div class="box-footer clearfix">
                   <button class="pull-right btn btn-default" id="sendEmail">Send <i class="fa fa-arrow-circle-right"></i></button>
                 </div>
-              </div>
+              </div>-->
 
             </section><!-- /.Left col -->
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
