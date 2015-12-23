@@ -8,7 +8,7 @@ package Data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.InitialContext;
-import sun.jdbc.odbc.ee.DataSource;
+import javax.sql.DataSource;
 
 /**
  *
