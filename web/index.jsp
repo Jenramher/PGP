@@ -14,20 +14,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <SCRIPT language="Javascript" type="text/JavaScript">
-            function validar() {
-                if (alfanumerico(document.introducir.usuario.value)==0) {
-                    alert ("Introduzca su identificador.");
-                    document.introducir.usuario.focus();
-                    return;
+             function validar(user,pass) {
+                var usuario = user.value;
+                var cont = pass.value; 
+                if (alfanumerico(usuario)==0) {
+                    alert ("Introduzca su login");
+                    return false;
+                }else 
+                if (alfanumerico(cont)==0) {
+                    alert ("Introduzca su clave");
+                    return false;
+                }else{
+                    return true;
                 }
-                if (alfanumerico(document.introducir.contraseña.value)==0) {
-                    alert ("Introduzca la clave.");
-                    document.introducir.contraseña.focus();
-                    return;
-                }
-                document.introducir.submit();
             }
-            
+
             function alfanumerico(txt) {
                 // Devuelve 0 si la cadena esta vacia, 1 si es numerica 
                 //o 2 si es alfanumerica
@@ -51,7 +52,7 @@
         <div class="login">
   <div class="heading">
     <h2>Sign in</h2>
-    <form action="Acceder" method="post">
+    <form action="Acceder" method="post" onsubmit="return validar(user,pass)">
 
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -75,7 +76,7 @@
         <div> <% if(request.getParameter("msg")!=null) {
             request.getParameter("msg");
         }%> </div>
-        <button type="submit" class="float" onclick="validar()">Login</button>
+        <button type="submit" class="float">Login</button>
        </form>
  		
  </div>

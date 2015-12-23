@@ -10,6 +10,81 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <SCRIPT language="Javascript" type="text/JavaScript">
+        function validarDni(nif) {
+            var numero
+            var let
+            var letra
+            var expresion_regular_dni
+
+            expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+
+            if(expresion_regular_dni.test (nif.value) == true){
+               numero = nif.value.substr(0,nif.value.length-1);
+               let = nif.value.substr(nif.value.length-1,1);
+               numero = numero % 23;
+               letra='TRWAGMYFPDXBNJZSQVHLCKET';
+               letra=letra.substring(numero,numero+1);
+              if (letra!=let.toUpperCase()) {
+                 alert('Dni erroneo, la letra del NIF no se corresponde');
+                 return 0;
+               }else{
+                 return 1;
+               }
+            }else{
+               alert('Dni erroneo, formato no válido');
+               return 0;
+             }
+          }
+          
+          function validarLogin(login) {
+                var usuario = login.value;
+                if (alfanumerico(usuario)==0) {
+                    alert ("Introduzca su login");
+                    return 0;
+                }else {
+                    return 1;
+                }
+            }
+
+            function alfanumerico(txt) {
+                // Devuelve 0 si la cadena esta vacia, 1 si es numerica 
+                //o 2 si es alfanumerica
+                var i;
+                if (txt.length!=0) {
+                    for (i=0;i<txt.length;i++){
+                        if (txt.substr(i,1)<"0" || txt.substr(i,1)>"9") {
+                            return 2;
+                        }
+                    }
+                    return 1;
+                }
+                else
+                    return 0;
+            }
+          
+          function verificar(nif, login, pass, repass){
+              if(validarLogin(login)==1 && validarDni(nif)==1){
+                  if(pass.value.length!=0){
+                      if(pass.value==repass.value){
+                          return true;
+                      } else {
+                          alert('Las contraseñas no coinciden');
+                          return false;
+                      }
+                  } else {
+                      alert('Introduce password');
+                      return false;
+                  }
+              } else {
+                  return false;
+              }
+              return false;
+          }
+          
+    </script>
+    
     <title>AdminLTE 2 | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -43,6 +118,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -548,8 +624,14 @@
                   <h3 class="box-title">add user</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="AddUser" method="post" onsubmit="return verificar(nif,login, pass, repass)">
                   <div class="box-body">
+                      <div class="form-group">
+                      <label for="inputUser3" class="col-sm-2 control-label">Login</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail3" name="login" placeholder="Login">
+                      </div>
+                    </div>
                       <div class="form-group">
                       <label for="inputUser3" class="col-sm-2 control-label">NIF</label>
                       <div class="col-sm-10">
@@ -557,12 +639,12 @@
                         <!-- incluir javascript que compruebe que es un nif-->
                       </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                       <div class="col-sm-10">
                         <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email">
-                      </div>
-                    </div>
+                      </div>-->
+                    
                     <div class="form-group">
                       <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
                       <div class="col-sm-10">
@@ -585,7 +667,7 @@
 
                         </select>
                         </div>
-                    <div class="form-group"> 
+                    <!--<div class="form-group"> 
                           <label  class="col-sm-2 control-label">Tipo de empleado</label>
                          <select name="empleado" class="form-control-static" >
                              
@@ -598,7 +680,7 @@
                             <option class="option-control" value="Probador"> Probador </option>
 
                         </select>
-                        </div>
+                        </div>-->
                       <div class="form-group">
                       <label class="col-sm-2 control-label">Información general</label>
                       <textarea class="form-control-static" rows="3" placeholder="Enter ..." name="informacion"></textarea>

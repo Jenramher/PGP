@@ -5,6 +5,7 @@
  */
 package Data;
 
+import Business.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +27,8 @@ public class UserDB {
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null; 
-        String query = "SELECT correo FROM usuario " 
-                + "WHERE correo = ?"; 
+        String query = "SELECT login FROM Usuarios " 
+                + "WHERE login = ?"; 
         try {
             ps = connection.prepareStatement(query); 
             ps.setString(1, user); 
@@ -49,8 +50,8 @@ public class UserDB {
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null; 
-        String query = "SELECT password FROM usuario " 
-                + "WHERE password = ?"; 
+        String query = "SELECT pass FROM usuario " 
+                + "WHERE pass = ?"; 
         try {
             ps = connection.prepareStatement(query); 
             ps.setString(1, password); 
@@ -66,5 +67,31 @@ public class UserDB {
         }
     
     }
+    
+    public static int insert(User user) {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        String query="INSERT INTO Usuarios (login, pass, tipo, nif, maxProy,"
+                + "infoGeneral) VALUES ('"
+                + user.getLogin()+"','"
+                + user.getPass()+"','"
+                + user.getTipo()+ "','"
+                + user.getNif()+"','"
+                + user.getMaxProy()+"','"
+                + user.getInfoGeneral()+ "')";
+                
+        try {
+            ps = connection.prepareStatement(query);
+            int res = ps.executeUpdate();
+            ps.close();
+            pool.freeConnection(connection);
+            return res;
+        } catch (SQLException e) { 
+            e.printStackTrace(); 
+            return 0;
+        }
+    }
+
     
 }
