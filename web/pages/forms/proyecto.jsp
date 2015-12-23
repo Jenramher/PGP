@@ -44,13 +44,13 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Proyectos
+                        Proyecto
                         <small>Crear un nuevo proyecto</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Forms</a></li>
-                        <li class="active">Proyectos</li>
+                        <li><a href="#">Proyectos</a></li>
+                        <li class="active">Nuevo Proyecto</li>
                     </ol>
                 </section>
 
@@ -92,7 +92,7 @@
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
                                             <button type="submit" class="btn btn-primary">Crear Proyecto</button>
-                                            <button type="reset" class="btn btn-primary">Cancelar</button>
+                                            <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default">Cancelar</button></a>
                                         </div>
                                         
                                     </form>

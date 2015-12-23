@@ -112,7 +112,7 @@
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
                                             <button type="submit" class="btn btn-primary">Crear Actividad</button>
-                                            <button type="submit" class="btn btn-default">Cancelar</button>
+                                            <a href=vistaActividades.jsp><button type="button" class="btn btn-default">Cancelar</button></a>
                                         </div>
 
                                     </form>
