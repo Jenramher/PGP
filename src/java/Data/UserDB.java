@@ -21,6 +21,30 @@ public class UserDB {
     // puede que pongamos una entity o lo que sea
     
     /*Esto es como en SSW*/
+    
+    public static boolean identificar(String user , String pass, String tipo ){
+         ConnectionPool pool = ConnectionPool.getInstance(); 
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null; 
+        String query = "SELECT login FROM Usuarios " 
+                + "WHERE login = ? AND pass = ? AND tipo = ?"; 
+        try {
+            ps = connection.prepareStatement(query); 
+            ps.setString(1, user); 
+            ps.setString(2, pass);
+            ps.setString(3, tipo);
+            rs = ps.executeQuery();
+            boolean res = rs.next();
+            rs.close(); 
+            ps.close(); 
+            pool.freeConnection(connection);
+            return res;
+        } catch (SQLException e) { 
+            e.printStackTrace(); 
+            return false;
+        }
+    }
     public static boolean exist(String user) {
         //
         ConnectionPool pool = ConnectionPool.getInstance(); 
