@@ -75,26 +75,38 @@ public class Acceder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String user = request.getParameter("user");
         System.out.println(user);
         String password = request.getParameter("pass");
         System.out.println(password);
-        String rol = request.getParameter("rol");
+        String rol = request.getParameter("tipo");
         System.out.println(rol);
         HttpSession sesion = request.getSession();
         
-        
         String url="", msg="";
         
-        if(UserDB.exist(user)){
+        /*if(UserDB.exist(user)){
             if(UserDB.comprobarPassword(password)){
                 sesion.setAttribute("user", user);
-                url="index1.html";
+                url="/index1.html";
             } else {
                 msg="El password no es correcto.";
             }
         } else {
+            System.out.println("hola caracola");
             msg = "El usuario no existe.";
+        }*/
+        if(UserDB.identificar(user, password, rol)){
+            url = "/index1.html";
+            sesion.setAttribute("user", user);
+            sesion.setAttribute("pass", password);
+            sesion.setAttribute("tipo", rol);
+        }else{
+            //Se puede poner una pagina igual que la inicial de login añadiendo 
+            //un mensaje que ponga algun dato esta mal , es mas sencillo de momento
+            //que mirar campo por campo
+            url= "/index.jsp";
         }
         
         request.setAttribute("msg", msg);
