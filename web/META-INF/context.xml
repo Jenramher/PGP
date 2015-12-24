@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/PGP"/>
+<Context path="/PGP">
+  <Resource auth="Container" driverClassName="org.apache.derby.jdbc.ClientDriver" logAbandoned="true" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/gtpros" password="Rv4fZQBE" removeAbandoned="true" removeAbandonedTimeout="60" type="javax.sql.DataSource" url="jdbc:derby://localhost:1527/gtpros" username="pgp_grupo06"/>
+</Context>
