@@ -34,6 +34,34 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script type="text/javascript">
+            function validar(){
+                if(validarNombre() && validarFecha())
+                    return true;
+                else{
+                    window.alert("Debe rellenar los campos de nombre y fecha");
+                    return false;
+                }
+            }
+            
+            function validarNombre(){
+                var n = document.proyecto.nombre.value;
+                if(n.length > 0){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            
+            function validarFecha(){
+                var fecha = document.proyecto.fechaInicioyFin.value;
+                if(fecha.length >= 2){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -92,7 +120,7 @@
                                             </div><!-- /.form-group -->
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary" name="crearProyecto" value="crearProyecto">Crear Proyecto</button>
+                                            <button type="submit" class="btn btn-primary" name="crearProyecto" value="crearProyecto" onclick="return validar()">Crear Proyecto</button>
                                             <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
                                         </div>
                                         

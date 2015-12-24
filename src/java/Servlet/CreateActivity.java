@@ -8,7 +8,9 @@ package Servlet;
 import Business.Actividad;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,13 +71,10 @@ public class CreateActivity extends HttpServlet {
     
     
     private Date getFecha(String s){
-        ArrayList<Integer> fecha = new ArrayList<>();
-        String[] fila = s.split("/");
-        for (String f : fila) {
-            fecha.add(Integer.parseInt(f));
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse(s, formatter);
 
-        return new Date(fecha.get(2), fecha.get(0), fecha.get(1));
+        return new Date(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Nueva actividad</title>
+        <title>Nueva fase</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -35,40 +35,13 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script type="text/javascript">
-            function validar(){
-                if(validarDescripcion() && validarFecha() && validarDE()){
-                    return true;
-                }else{
-                    window.alert("Debe rellenar los campos de Descripción, la Fecha y la Duración Estimada");
-                    return false;
-                   
-                }
-            }
-            
             function validarFecha(){
-                var fecha = document.actividad.fechaInicioyFin.value;
+                var fecha = document.fase.fechaInicioyFin.value;
                 if(fecha.length >= 2){
                     return true;
                 }else{
+                    window.alert("Debe rellenar la fecha");
                     return false;
-                }
-            }
-            
-            function validarDescripcion(){
-                var d = document.actividad.descripcion.value;
-                if(d.length > 0){
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-            
-            function validarDE(){
-                var dE = document.actividad.duracionEstimada.value;
-                if(dE == ""){
-                    return false;
-                }else{
-                    return value;
                 }
             }
         </script>
@@ -82,13 +55,14 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Actividades
-                        <small>Crear una nueva actividad</small>
+                        Fase
+                        <small>Crear una nueva fase</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Actividades</a></li>
-                        <li class="active">Nueva Actividad</li>
+                        <li><a href="#">Proyectos</a></li>
+                        <li><a href="#">Fases</a></li>
+                        <li class="active">Nueva Fase</li>
                     </ol>
                 </section>
 
@@ -98,37 +72,20 @@
                     <!-- SELECT2 EXAMPLE -->
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Nueva actividad</h3>
+                            <h3 class="box-title">Nueva fase</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form role="form" action="../../createActivity" name="actividad" method="post">
+                                    <form role="form" action="../../createPhase" name="fase" method="post" >
                                         <div class="box-body">
-                                            <!-- textarea -->
                                             <div class="form-group">
-                                                <label>Descripción de la actividad</label>
-                                                <textarea class="form-control" rows="3" placeholder="Introduzca una descripción de la actividad" name="descripcion"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Rol necesario</label>
-                                                <select class="form-control select2" style="width: 100%;" name="rol">
-                                                    <option selected="selected" value="JP">Jefe de proyecto</option>
-                                                    <option value="AN">Analista</option>
-                                                    <option value="DI">Diseñador</option>
-                                                    <option value="AP">Analista-programador</option>
-                                                    <option value="RP">Responsable equipo de pruebas</option>
-                                                    <option value="PG">Programador</option>
-                                                    <option value="PR">Probador</option>
-                                                </select>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="duracionEstimadaActividad">Duración estimada de la actividad</label>
-                                                <input type="number" class="form-control" id="duracionEstimadaActividad" placeholder="Introduzca la duración estimada de esta actividad" name="duracionEstimada" value="duracionE">
+                                                <label for="nombreFase">Nombre de la fase</label><!-- Poner como nombre Fase y el número de fase que toque-->
+                                                <input type="text" readonly="readonly" class="form-control" id="nombreFase" placeholder="Fase" name="nombre" value="Fase">
                                             </div>
                                             <!-- Date range -->
                                             <div class="form-group">
-                                                <label>Fecha de la actividad:</label>
+                                                <label>Fecha de la fase:</label>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -139,20 +96,18 @@
                                             <div class="form-group">
                                                 <label>Estado</label>
                                                 <select class="form-control select2" style="width: 100%;" name="estado">
-                                                    <option selected="selected" value="noRealizada">No realizada</option>
-                                                    <option value="realizada" disabled="disabled">Realizada</option>
+                                                    <option selected="selected" value="S">Sin comenzar</option>
+                                                    <option disabled="disabled" value="E">En curso</option>
+                                                    <option disabled="disabled" value="F">Finalizado</option>
+                                                    <option disabled="disabled" value="C">Cerrado</option>
                                                 </select>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="duracionRealActividad">Duración real de la actividad</label>
-                                                <input type="number" class="form-control" id="duracionRealActividad" placeholder="Introduzca la duración real de esta actividad" name="duracionReal" value="duracionR">
-                                            </div>
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary" name="crearActividad" value="crearActividad" onclick="return validar()">Crear Actividad</button>
-                                            <a href=vistaActividades.jsp><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
+                                            <button type="submit" class="btn btn-primary" name="crearFase" value="crearFase"  onclick="return validarFecha()">Crear Fase</button>
+                                            <a href="proyecto.jsp"><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
                                         </div>
-
+                                        
                                     </form>
                                 </div><!-- /.col -->
                             </div><!-- /.row -->
@@ -161,6 +116,7 @@
 
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
+            
             <%@include file="footer.html" %>
             <%@include file="settings.html" %>
         </div><!-- ./wrapper -->

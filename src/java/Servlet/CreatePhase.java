@@ -5,7 +5,7 @@
  */
 package Servlet;
 
-import Business.Proyecto;
+import Business.Fase;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author andreaescribano
  */
-@WebServlet(name = "CreateProyect", urlPatterns = {"/createProyect"})
-public class CreateProyect extends HttpServlet {
+@WebServlet(name = "CreatePhase", urlPatterns = {"/createPhase"})
+public class CreatePhase extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +37,7 @@ public class CreateProyect extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
-        String usuario = /*(String) sesion.getAttribute("usuario")*/"jefe_1";
+        int idProyecto = /*(Integer) sesion.getAttribute("proyecto")*/1;
         String nombre = request.getParameter("nombre");
         String fechaInicioyFin = request.getParameter("fechaInicioyFin");
         String s = "";
@@ -55,7 +55,7 @@ public class CreateProyect extends HttpServlet {
 
         char estado = request.getParameter("estado").charAt(0);
         
-        Proyecto.guardarNuevoProyecto(nombre, getFecha(s), getFecha(t), estado, usuario);
+        Fase.crearNuevaFase(idProyecto, nombre, getFecha(s), getFecha(t), estado);
     }
     
     private Date getFecha(String s){
