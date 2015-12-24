@@ -22,7 +22,7 @@ public class ConnectionPool {
     private ConnectionPool() {
         try {
             InitialContext ic = new InitialContext();
-            dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/gtpros");
+            dataSource = (DataSource) ic.lookup("jdbcGtrpos");
         } catch (Exception e) {
             e.printStackTrace();
         }
