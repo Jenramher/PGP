@@ -67,9 +67,9 @@
         <div class="input-group input-group-lg"> 
             <span class="input-group-addon"/>
              <select name="tipo" class="form-control" >
-                <option class="option-control" value="Desarrollador"> Desarrollador </option>
-                <option class="option-control" value="Administrador"> Administrador </option>
-                <option class="option-control" value="Jefe de Proyecto"> Jefe Proyecto </option>
+                <option class="option-control" value="D"> Desarrollador </option>
+                <option class="option-control" value="A"> Administrador </option>
+                <option class="option-control" value="J"> Jefe Proyecto </option>
                 
             </select>
         </div>
