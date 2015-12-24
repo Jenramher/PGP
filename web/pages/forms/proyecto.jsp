@@ -65,11 +65,11 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form role="form">
+                                    <form role="form" action="../../createProyect" name="proyecto" method="post">
                                         <div class="box-body">
                                             <div class="form-group">
                                                 <label for="nombreProyecto">Nombre del proyecto</label>
-                                                <input type="text" class="form-control" id="nombreProyecto" placeholder="Introduzca el nombre del proyecto">
+                                                <input type="text" class="form-control" id="nombreProyecto" placeholder="Introduzca el nombre del proyecto" name="nombre">
                                             </div>
                                             <!-- Date range -->
                                             <div class="form-group">
@@ -78,21 +78,22 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control pull-right" id="reservation" placeholder="Pulse para introducir la fecha de inicio y la fecha de fin">
+                                                    <input type="text" class="form-control pull-right" id="reservation" placeholder="Pulse para introducir la fecha de inicio y la fecha de fin" name="fechaInicioyFin">
                                                 </div><!-- /.input group -->
                                             </div><!-- /.form group -->
                                             <div class="form-group">
                                                 <label>Estado</label>
-                                                <select class="form-control select2" disabled="disabled" style="width: 100%;">
-                                                    <option selected="selected">Creado</option>
-                                                    <option>En curso</option>
-                                                    <option>Cerrado</option>
+                                                <select class="form-control select2" style="width: 100%;" name="estado">
+                                                    <option selected="selected" value="S">Sin comenzar</option>
+                                                    <option disabled="disabled" value="E">En curso</option>
+                                                    <option disabled="disabled" value="F">Finalizado</option>
+                                                    <option disabled="disabled" value="C">Cerrado</option>
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary">Crear Proyecto</button>
-                                            <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default">Cancelar</button></a>
+                                            <button type="submit" class="btn btn-primary" name="crearProyecto" value="crearProyecto">Crear Proyecto</button>
+                                            <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
                                         </div>
                                         
                                     </form>

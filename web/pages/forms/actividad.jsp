@@ -49,8 +49,8 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Forms</a></li>
-                        <li class="active">Actividades</li>
+                        <li><a href="#">Actividades</a></li>
+                        <li class="active">Nueva Actividad</li>
                     </ol>
                 </section>
 
@@ -65,28 +65,28 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form role="form">
+                                    <form role="form" action="../../createActivity" name="actividad" method="post">
                                         <div class="box-body">
                                             <!-- textarea -->
                                             <div class="form-group">
                                                 <label>Descripción de la actividad</label>
-                                                <textarea class="form-control" rows="3" placeholder="Introduzca una descripción de la actividad"></textarea>
+                                                <textarea class="form-control" rows="3" placeholder="Introduzca una descripción de la actividad" name="descripcion"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Rol necesario</label>
-                                                <select class="form-control select2" style="width: 100%;">
-                                                    <option selected="selected">Jefe de proyecto</option>
-                                                    <option>Analista</option>
-                                                    <option>Diseñador</option>
-                                                    <option>Analista-programador</option>
-                                                    <option>Responsable equipo de pruebas</option>
-                                                    <option>Programador</option>
-                                                    <option>Probador</option>
+                                                <select class="form-control select2" style="width: 100%;" name="rol">
+                                                    <option selected="selected" value="JP">Jefe de proyecto</option>
+                                                    <option value="AN">Analista</option>
+                                                    <option value="DI">Diseñador</option>
+                                                    <option value="AP">Analista-programador</option>
+                                                    <option value="RP">Responsable equipo de pruebas</option>
+                                                    <option value="PG">Programador</option>
+                                                    <option value="PR">Probador</option>
                                                 </select>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="duracionEstimadaActividad">Duración estimada de la actividad</label>
-                                                <input type="number" class="form-control" id="duracionEstimadaActividad" placeholder="Introduzca la duración estimada de esta actividad">
+                                                <input type="number" class="form-control" id="duracionEstimadaActividad" placeholder="Introduzca la duración estimada de esta actividad" name="duracionEstimada" value="duracionE">
                                             </div>
                                             <!-- Date range -->
                                             <div class="form-group">
@@ -95,24 +95,24 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control pull-right" id="reservation" placeholder="Pulse para introducir la fecha de inicio y la fecha de fin">
+                                                    <input type="text" class="form-control pull-right" id="reservation" placeholder="Pulse para introducir la fecha de inicio y la fecha de fin" name="fechaInicioyFin">
                                                 </div><!-- /.input group -->
                                             </div><!-- /.form group -->
                                             <div class="form-group">
                                                 <label>Estado</label>
-                                                <select class="form-control select2" disabled="disabled" style="width: 100%;">
-                                                    <option selected="selected">No realizada</option>
-                                                    <option>Realizada</option>
+                                                <select class="form-control select2" style="width: 100%;" name="estado">
+                                                    <option selected="selected" value="noRealizada">No realizada</option>
+                                                    <option value="realizada" disabled="disabled">Realizada</option>
                                                 </select>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="duracionRealActividad">Duración real de la actividad</label>
-                                                <input type="number" class="form-control" id="duracionRealActividad" placeholder="Introduzca la duración real de esta actividad">
+                                                <input type="number" class="form-control" id="duracionRealActividad" placeholder="Introduzca la duración real de esta actividad" name="duracionReal" value="duracionR">
                                             </div>
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary">Crear Actividad</button>
-                                            <a href=vistaActividades.jsp><button type="button" class="btn btn-default">Cancelar</button></a>
+                                            <button type="submit" class="btn btn-primary" name="crearActividad" value="crearActividad">Crear Actividad</button>
+                                            <a href=vistaActividades.jsp><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
                                         </div>
 
                                     </form>
