@@ -36,10 +36,9 @@
         <![endif]-->
         <script type="text/javascript">
             function validar(){
-                if(validarDescripcion() && validarFecha() && validarDE()){
+                if(validarDescripcion() &&validarDE() && validarFecha()){
                     return true;
                 }else{
-                    window.alert("Debe rellenar los campos de Descripción, la Fecha y la Duración Estimada");
                     return false;
                    
                 }
@@ -47,28 +46,31 @@
             
             function validarFecha(){
                 var fecha = document.actividad.fechaInicioyFin.value;
-                if(fecha.length >= 2){
-                    return true;
-                }else{
+                if(fecha === "" || fecha === " " || fecha.length < 23){
+                    window.alert("Fecha errónea");
                     return false;
+                }else{
+                    return true;
                 }
             }
             
             function validarDescripcion(){
                 var d = document.actividad.descripcion.value;
-                if(d.length > 0){
-                    return true;
-                }else{
+                if(d === "" || d === " "){
+                    window.alert("Error en la descripción");
                     return false;
+                }else{
+                    return true;
                 }
             }
             
             function validarDE(){
                 var dE = document.actividad.duracionEstimada.value;
-                if(dE == ""){
+                if(dE === ""){
+                    window.alert("Duración estimada no puede estar vacío");
                     return false;
                 }else{
-                    return value;
+                    return true;
                 }
             }
         </script>
@@ -139,8 +141,8 @@
                                             <div class="form-group">
                                                 <label>Estado</label>
                                                 <select class="form-control select2" style="width: 100%;" name="estado">
-                                                    <option selected="selected" value="noRealizada">No realizada</option>
-                                                    <option value="realizada" disabled="disabled">Realizada</option>
+                                                    <option selected="selected" value="false">No realizada</option>
+                                                    <option value="true" disabled="disabled">Realizada</option>
                                                 </select>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
@@ -198,61 +200,9 @@
                 //Initialize Select2 Elements
                 $(".select2").select2();
 
-                //Datemask dd/mm/yyyy
-                $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-                //Datemask2 mm/dd/yyyy
-                $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-                //Money Euro
-                $("[data-mask]").inputmask();
-
                 //Date range picker
                 $('#reservation').daterangepicker();
-                //Date range picker with time picker
-                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-                //Date range as a button
-                $('#daterange-btn').daterangepicker(
-                        {
-                            ranges: {
-                                'Today': [moment(), moment()],
-                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                            },
-                            startDate: moment().subtract(29, 'days'),
-                            endDate: moment()
-                        },
-                function (start, end) {
-                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                }
-                );
 
-                //iCheck for checkbox and radio inputs
-                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                    checkboxClass: 'icheckbox_minimal-blue',
-                    radioClass: 'iradio_minimal-blue'
-                });
-                //Red color scheme for iCheck
-                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                    checkboxClass: 'icheckbox_minimal-red',
-                    radioClass: 'iradio_minimal-red'
-                });
-                //Flat red color scheme for iCheck
-                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                    checkboxClass: 'icheckbox_flat-green',
-                    radioClass: 'iradio_flat-green'
-                });
-
-                //Colorpicker
-                $(".my-colorpicker1").colorpicker();
-                //color picker with addon
-                $(".my-colorpicker2").colorpicker();
-
-                //Timepicker
-                $(".timepicker").timepicker({
-                    showInputs: false
-                });
             });
         </script>
     </body>

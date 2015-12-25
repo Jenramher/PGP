@@ -40,11 +40,7 @@ public class CreateActivity extends HttpServlet {
         int idFase = /*(Integer) sesion.getAttribute("idFase")*/1;
         String descripcion = request.getParameter("descripcion");
         String rol = request.getParameter("rol");
-        int duracionEstimada = 0;
-        if (!request.getParameter("duracionEstimada").equals("")) {
-            duracionEstimada = Integer.parseInt(request.getParameter("duracionEstimada"));
-        }
-
+        int duracionEstimada = Integer.parseInt(request.getParameter("duracionEstimada"));
         String fechaInicioyFin = request.getParameter("fechaInicioyFin");
         String s = "";
         boolean encontrado = false;
@@ -58,14 +54,9 @@ public class CreateActivity extends HttpServlet {
             i++;
         }
         String t = fechaInicioyFin.substring(i + 2);
-        String estado = request.getParameter("estado");
-        int duracionReal = 0;
-        if (!request.getParameter("duracionReal").equals("")) {
-            duracionReal = Integer.parseInt(request.getParameter("duracionReal"));
-        }
-        
-        if(estado.equals("noRealizada"))
-            Actividad.guardarNuevaActividad(descripcion, rol, duracionEstimada, getFecha(s), getFecha(t), duracionReal, false, idFase);
+        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
+        int duracionReal = Integer.parseInt(request.getParameter("duracionReal"));
+        Actividad.guardarNuevaActividad(descripcion, rol, duracionEstimada, getFecha(s), getFecha(t), duracionReal, estado, idFase);
 
     }
     
