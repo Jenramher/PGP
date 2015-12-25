@@ -7,6 +7,7 @@ package Business;
 
 import Data.FaseDB;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +23,15 @@ public class Fase {
     private int idProyecto;
 
     public Fase(String nombre, Date fechaInicio, Date fechaFin, char estado, int idProyecto) {
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.idProyecto = idProyecto;
+    }
+    
+    public Fase(int id, String nombre, Date fechaInicio, Date fechaFin, char estado, int idProyecto) {
+        this.id = id;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -56,4 +66,9 @@ public class Fase {
     public static void crearNuevaFase(int idProyecto, String nombre, Date fechaInicio, Date fechaFin, char estado) {
         FaseDB.insert(new Fase(nombre, fechaInicio, fechaFin, estado, idProyecto));
     }
+    
+    public static ArrayList<Fase> getFase(int idProyecto) {
+        return FaseDB.selectFases(idProyecto);
+    }
+
 }

@@ -5,12 +5,14 @@
  */
 package Servlet;
 
-import Business.Proyecto;
+import Business.Fase;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author andreaescribano
  */
-@WebServlet(name = "CreateProyect", urlPatterns = {"/createProyect"})
-public class CreateProyect extends HttpServlet {
+@WebServlet(name = "Fases", urlPatterns = {"/Fases"})
+public class Fases extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,28 +39,50 @@ public class CreateProyect extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
-        String usuario = /*(String) sesion.getAttribute("usuario")*/"jefe_1";
-        String nombre = request.getParameter("nombre");
-        String fechaInicioyFin = request.getParameter("fechaInicioyFin");
-        String s = "";
-        boolean encontrado = false;
-        int i = 0;
-        while (i < fechaInicioyFin.length() && !encontrado) {
-            if (fechaInicioyFin.charAt(i) != ' ') {
-                s += fechaInicioyFin.charAt(i);
-            } else {
-                encontrado = true;
-            }
-            i++;
-        }
-        String t = fechaInicioyFin.substring(i + 2);
+        int idProyecto = Integer.parseInt(request.getParameter("idProyecto"));
+        String url = null;
+        if (idProyecto != 0) {
+            String accion = request.getParameter("fase");
+            if (accion != null) {
+                if (accion.equals("crearFase")) {
+                    String nombre = request.getParameter("nombre");
+                    String fechaInicioyFin = request.getParameter("fechaInicioyFin");
+                    String s = "";
+                    boolean encontrado = false;
+                    int i = 0;
+                    while (i < fechaInicioyFin.length() && !encontrado) {
+                        if (fechaInicioyFin.charAt(i) != ' ') {
+                            s += fechaInicioyFin.charAt(i);
+                        } else {
+                            encontrado = true;
+                        }
+                        i++;
+                    }
+                    String t = fechaInicioyFin.substring(i + 2);
 
-        char estado = request.getParameter("estado").charAt(0);
-        
-        Proyecto.guardarNuevoProyecto(nombre, getFecha(s), getFecha(t), estado, usuario);
+                    char estado = request.getParameter("estado").charAt(0);
+
+                    Fase.crearNuevaFase(idProyecto, nombre, getFecha(s), getFecha(t), estado);
+                    url = "/vistaFases.jsp";
+                } else if (accion.equals("verFases")) {
+                    ArrayList<Fase> fases = Fase.getFase(idProyecto);
+                    sesion.setAttribute("idProyecto", idProyecto);
+                    sesion.setAttribute("fases", fases);
+                    url = "/vistaFases.jsp";
+                }else if(accion.equals("crearNuevaFase")){
+                    ArrayList<Fase> fases = Fase.getFase(idProyecto);
+                    sesion.setAttribute("numFase", fases.size()+1);
+                    url = "/fase.jsp";
+                }
+                
+                RequestDispatcher respuesta = getServletContext().getRequestDispatcher(url);
+                respuesta.forward(request, response);
+            }
+        }
+
     }
-    
-    private Date getFecha(String s){
+
+    private Date getFecha(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(s, formatter);
 

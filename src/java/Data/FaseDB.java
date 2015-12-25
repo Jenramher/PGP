@@ -8,7 +8,9 @@ package Data;
 import Business.Fase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,6 +37,30 @@ public class FaseDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Fase> selectFases(int idProyecto) {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM Fases WHERE idProyecto=?";
+        ArrayList<Fase> fases = new ArrayList<Fase>();
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, idProyecto);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Fase f = new Fase(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4), rs.getString(5).charAt(0), idProyecto);
+                fases.add(f);
+            }
+            rs.close();
+            ps.close();
+            pool.freeConnection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fases;
     }
 
 }

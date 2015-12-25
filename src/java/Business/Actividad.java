@@ -7,6 +7,7 @@ package Business;
 
 import Data.ActividadBD;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,6 +26,18 @@ public class Actividad {
     private int idFase;
 
     public Actividad(String descripcion, String rolNecesario, int duracionEstimada, Date fechaComienzo, Date fechaFin, int duracionReal, boolean estado, int idFase) {
+        this.descripcion = descripcion;
+        this.rolNecesario = rolNecesario;
+        this.duracionEstimada = duracionEstimada;
+        this.fechaComienzo = fechaComienzo;
+        this.fechaFin = fechaFin;
+        this.duracionReal = duracionReal;
+        this.estado = estado;
+        this.idFase = idFase;
+    }
+
+    public Actividad(int identificador, String descripcion, String rolNecesario, int duracionEstimada, Date fechaComienzo, Date fechaFin, int duracionReal, boolean estado, int idFase) {
+        this.identificador = identificador;
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
         this.duracionEstimada = duracionEstimada;
@@ -62,17 +75,21 @@ public class Actividad {
     public int getDuracionReal() {
         return duracionReal;
     }
-    
+
     public boolean getEstado() {
         return estado;
     }
-    
-    public int getIdFase(){
+
+    public int getIdFase() {
         return idFase;
     }
-    
+
     public static void guardarNuevaActividad(String descripcion, String rol, int duracionEstimada, Date fechaInicio, Date fechaFin, int duracionReal, boolean estado, int idFase) {
         ActividadBD.insert(new Actividad(descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase));
     }
-   
+
+    public static ArrayList<Actividad> getFase(int idFase) {
+        return ActividadBD.selectActividades(idFase);   
+    }
+
 }

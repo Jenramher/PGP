@@ -5,12 +5,14 @@
  */
 package Servlet;
 
-import Business.Fase;
+import Business.Actividad;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author andreaescribano
  */
-@WebServlet(name = "CreatePhase", urlPatterns = {"/createPhase"})
-public class CreatePhase extends HttpServlet {
+@WebServlet(name = "Actividades", urlPatterns = {"/Actividades"})
+public class Actividades extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,28 +39,48 @@ public class CreatePhase extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
-        int idProyecto = /*(Integer) sesion.getAttribute("proyecto")*/1;
-        String nombre = request.getParameter("nombre");
-        String fechaInicioyFin = request.getParameter("fechaInicioyFin");
-        String s = "";
-        boolean encontrado = false;
-        int i = 0;
-        while (i < fechaInicioyFin.length() && !encontrado) {
-            if (fechaInicioyFin.charAt(i) != ' ') {
-                s += fechaInicioyFin.charAt(i);
-            } else {
-                encontrado = true;
+        int idFase = Integer.parseInt(request.getParameter("idFase"));
+        String url = null;
+        if (idFase != 0) {
+            String accion = request.getParameter("actividad");
+            if (accion != null) {
+                if (accion.equals("crearActividad")) {
+                    String descripcion = request.getParameter("descripcion");
+                    String rol = request.getParameter("rol");
+                    int duracionEstimada = Integer.parseInt(request.getParameter("duracionEstimada"));
+                    String fechaInicioyFin = request.getParameter("fechaInicioyFin");
+                    String s = "";
+                    boolean encontrado = false;
+                    int i = 0;
+                    while (i < fechaInicioyFin.length() && !encontrado) {
+                        if (fechaInicioyFin.charAt(i) != ' ') {
+                            s += fechaInicioyFin.charAt(i);
+                        } else {
+                            encontrado = true;
+                        }
+                        i++;
+                    }
+                    String t = fechaInicioyFin.substring(i + 2);
+                    boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
+                    int duracionReal = Integer.parseInt(request.getParameter("duracionReal"));
+                    Actividad.guardarNuevaActividad(descripcion, rol, duracionEstimada, getFecha(s), getFecha(t), duracionReal, estado, idFase);
+                    url = "/vistaActividades.jsp";
+                } else if (accion.equals("verActividades")) {
+                    ArrayList<Actividad> actividades = Actividad.getFase(idFase);
+                    sesion.setAttribute("idFase", idFase);
+                    sesion.setAttribute("actividades", actividades);
+                    url = "/vistaActividades.jsp";
+                } else if(accion.equals("crearNuevaActividad")){
+                    url = "/actividad.jsp";
+                }
+                RequestDispatcher respuesta = getServletContext().getRequestDispatcher(url);
+                respuesta.forward(request, response);
             }
-            i++;
         }
-        String t = fechaInicioyFin.substring(i + 2);
 
-        char estado = request.getParameter("estado").charAt(0);
-        
-        Fase.crearNuevaFase(idProyecto, nombre, getFecha(s), getFecha(t), estado);
     }
-    
-    private Date getFecha(String s){
+
+    private Date getFecha(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(s, formatter);
 

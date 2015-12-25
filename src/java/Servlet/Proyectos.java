@@ -5,12 +5,14 @@
  */
 package Servlet;
 
-import Business.Actividad;
+import Business.Proyecto;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author andreaescribano
  */
-@WebServlet(name = "CreateActivity", urlPatterns = {"/createActivity"})
-public class CreateActivity extends HttpServlet {
+@WebServlet(name = "Proyectos", urlPatterns = {"/Proyectos"})
+public class Proyectos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,31 +39,49 @@ public class CreateActivity extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
-        int idFase = /*(Integer) sesion.getAttribute("idFase")*/1;
-        String descripcion = request.getParameter("descripcion");
-        String rol = request.getParameter("rol");
-        int duracionEstimada = Integer.parseInt(request.getParameter("duracionEstimada"));
-        String fechaInicioyFin = request.getParameter("fechaInicioyFin");
-        String s = "";
-        boolean encontrado = false;
-        int i = 0;
-        while (i < fechaInicioyFin.length() && !encontrado) {
-            if (fechaInicioyFin.charAt(i) != ' ') {
-                s += fechaInicioyFin.charAt(i);
-            } else {
-                encontrado = true;
-            }
-            i++;
-        }
-        String t = fechaInicioyFin.substring(i + 2);
-        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
-        int duracionReal = Integer.parseInt(request.getParameter("duracionReal"));
-        Actividad.guardarNuevaActividad(descripcion, rol, duracionEstimada, getFecha(s), getFecha(t), duracionReal, estado, idFase);
+        String usuario = /*(String) sesion.getAttribute("usuario")*/ "jefe_1";
+        String url = null;
+        if (usuario != null) {
+            String accion = request.getParameter("proyecto");
+            if (accion != null) {
+                if (accion.equals("crearProyecto")) {
+                    String nombre = request.getParameter("nombre");
+                    String fechaInicioyFin = request.getParameter("fechaInicioyFin");
+                    String s = "";
+                    boolean encontrado = false;
+                    int i = 0;
+                    while (i < fechaInicioyFin.length() && !encontrado) {
+                        if (fechaInicioyFin.charAt(i) != ' ') {
+                            s += fechaInicioyFin.charAt(i);
+                        } else {
+                            encontrado = true;
+                        }
+                        i++;
+                    }
+                    String t = fechaInicioyFin.substring(i + 2);
 
+                    char estado = request.getParameter("estado").charAt(0);
+
+                    Proyecto.guardarNuevoProyecto(nombre, getFecha(s), getFecha(t), estado, usuario);
+                    url = "/vistaProyectos.jsp";
+                } else if(accion.equals("verProyectos")) {
+                    ArrayList<Proyecto> proyectos = Proyecto.getProyectos(usuario);
+                    for(Proyecto p : proyectos){
+                        System.out.println(p.getLogin());
+                    }
+                    sesion.setAttribute("usuario", usuario);
+                    sesion.setAttribute("proyectos", proyectos);
+                    url = "/vistaProyectos.jsp";
+                } else if(accion.equals("crearNuevoProyecto")){
+                    url = "/proyecto.jsp";
+                }
+                RequestDispatcher respuesta = getServletContext().getRequestDispatcher(url);
+                respuesta.forward(request, response);
+            }
+        }
     }
-    
-    
-    private Date getFecha(String s){
+
+    private Date getFecha(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(s, formatter);
 

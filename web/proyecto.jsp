@@ -7,33 +7,33 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-        <!-- daterange picker -->
-        <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker-bs3.css">
-        <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="../../plugins/iCheck/all.css">
-        <!-- Bootstrap Color Picker -->
-        <link rel="stylesheet" href="../../plugins/colorpicker/bootstrap-colorpicker.min.css">
-        <!-- Bootstrap time Picker -->
-        <link rel="stylesheet" href="../../plugins/timepicker/bootstrap-timepicker.min.css">
-        <!-- Select2 -->
-        <link rel="stylesheet" href="../../plugins/select2/select2.min.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-             folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/select2.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
         <script type="text/javascript">
             function validar(){
                 if(validarNombre() && validarFecha())
@@ -94,7 +94,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form role="form" action="../../createProyect" name="proyecto" method="post">
+                                    <form role="form" action="Proyectos" name="proyecto" value="crearProyecto" method="post">
                                         <div class="box-body">
                                             <div class="form-group">
                                                 <label for="nombreProyecto">Nombre del proyecto</label>
@@ -121,8 +121,8 @@
                                             </div><!-- /.form-group -->
                                         </div><!-- /.box-body -->
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-primary" name="crearProyecto" value="crearProyecto" onclick="return validar()">Crear Proyecto</button>
-                                            <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
+                                            <button type="submit" class="btn btn-primary" name="proyecto" onclick="return validar()">Crear Proyecto</button>
+                                            <a href="vistaProyectos.jsp"><button type="button" class="btn btn-default" name="proyecto" value="cancelar">Cancelar</button></a>
                                         </div>
                                         
                                     </form>
@@ -139,32 +139,23 @@
         </div><!-- ./wrapper -->
 
         <!-- jQuery 2.1.4 -->
-        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
-        <script src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <!-- Slimscroll -->
+        <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- Select2 -->
-        <script src="../../plugins/select2/select2.full.min.js"></script>
-        <!-- InputMask -->
-        <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-        <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-        <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <script src="plugins/select2/select2.full.min.js"></script>
         <!-- date-range-picker -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-        <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- bootstrap color picker -->
-        <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-        <!-- bootstrap time picker -->
-        <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-        <!-- SlimScroll 1.3.0 -->
-        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-        <!-- iCheck 1.0.1 -->
-        <script src="../../plugins/iCheck/icheck.min.js"></script>
+        <script src="plugins/daterangepicker/daterangepicker.js"></script>
         <!-- FastClick -->
-        <script src="../../plugins/fastclick/fastclick.min.js"></script>
+        <script src="plugins/fastclick/fastclick.min.js"></script>
         <!-- AdminLTE App -->
-        <script src="../../dist/js/app.min.js"></script>
+        <script src="dist/js/app.min.js"></script>
         <!-- AdminLTE for demo purposes -->
-        <script src="../../dist/js/demo.js"></script>
+        <script src="dist/js/demo.js"></script>
+        
         <!-- Page script -->
         <script>
             $(function () {
