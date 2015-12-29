@@ -106,6 +106,30 @@ public class ActividadBD {
         return a;
     }
     
+    public static ArrayList<Actividad> selectActividades(String login) {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM Actividades WHERE idFase=?";
+        ArrayList<Actividad> actividades = new ArrayList<Actividad>();
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Actividad a = new Actividad(rs.getInt(1), login,rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9));
+                actividades.add(a);
+            }
+            rs.close();
+            ps.close();
+            pool.freeConnection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return actividades;
+    }
+    
     public static void updateActividad(Actividad a) {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
