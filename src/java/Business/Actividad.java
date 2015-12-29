@@ -6,42 +6,42 @@
 package Business;
 
 import Data.ActividadBD;
-import java.sql.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author andreaescribano
  */
-public class Actividad {
+public class Actividad implements Serializable{
 
     private int identificador;
     private String descripcion;
     private String rolNecesario;
     private int duracionEstimada;
-    private Date fechaComienzo;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private int duracionReal;
     private boolean estado;
     private int idFase;
 
-    public Actividad(String descripcion, String rolNecesario, int duracionEstimada, Date fechaComienzo, Date fechaFin, int duracionReal, boolean estado, int idFase) {
+    public Actividad(String descripcion, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
         this.duracionEstimada = duracionEstimada;
-        this.fechaComienzo = fechaComienzo;
+        this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.duracionReal = duracionReal;
         this.estado = estado;
         this.idFase = idFase;
     }
 
-    public Actividad(int identificador, String descripcion, String rolNecesario, int duracionEstimada, Date fechaComienzo, Date fechaFin, int duracionReal, boolean estado, int idFase) {
+    public Actividad(int identificador, String descripcion, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
         this.identificador = identificador;
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
         this.duracionEstimada = duracionEstimada;
-        this.fechaComienzo = fechaComienzo;
+        this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.duracionReal = duracionReal;
         this.estado = estado;
@@ -64,13 +64,18 @@ public class Actividad {
         return duracionEstimada;
     }
 
-    public Date getFechaComienzo() {
-        return fechaComienzo;
+    public String getFechaInicio() {
+        return fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
 
     public int getDuracionReal() {
         return duracionReal;
@@ -84,12 +89,21 @@ public class Actividad {
         return idFase;
     }
 
-    public static void guardarNuevaActividad(String descripcion, String rol, int duracionEstimada, Date fechaInicio, Date fechaFin, int duracionReal, boolean estado, int idFase) {
-        ActividadBD.insert(new Actividad(descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase));
+    public static void guardarNuevaActividad(Actividad a) {
+        ActividadBD.insertActividad(a);
     }
 
     public static ArrayList<Actividad> getFase(int idFase) {
         return ActividadBD.selectActividades(idFase);   
     }
 
+    public static void actualizarActividad(Actividad a) {
+        ActividadBD.updateActividad(a);
+    }
+
+    public static Actividad getActivity(int idActividad) {
+        return ActividadBD.selectActividad(idActividad);
+    }
+
+    
 }

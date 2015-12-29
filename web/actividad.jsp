@@ -1,3 +1,4 @@
+<%@page import="Business.Actividad"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,69 +6,69 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Nueva actividad</title>
         <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
-    <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
-    <!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="plugins/select2/select2.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- daterange picker -->
+        <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link rel="stylesheet" href="plugins/iCheck/all.css">
+        <!-- Bootstrap Color Picker -->
+        <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
+        <!-- Bootstrap time Picker -->
+        <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
         <script type="text/javascript">
-            function validar(){
-                if(validarDescripcion() &&validarDE() && validarFecha()){
+            function validar() {
+                if (validarDescripcion() && validarDE() && validarFecha()) {
                     return true;
-                }else{
+                } else {
                     return false;
-                   
+
                 }
             }
-            
-            function validarFecha(){
+
+            function validarFecha() {
                 var fecha = document.actividad.fechaInicioyFin.value;
-                if(fecha === "" || fecha === " " || fecha.length < 23){
+                if (fecha === "" || fecha === " " || fecha.length < 23) {
                     window.alert("Fecha errónea");
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
-            
-            function validarDescripcion(){
+
+            function validarDescripcion() {
                 var d = document.actividad.descripcion.value;
-                if(d === "" || d === " "){
+                if (d === "" || d === " ") {
                     window.alert("Error en la descripción");
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
-            
-            function validarDE(){
+
+            function validarDE() {
                 var dE = document.actividad.duracionEstimada.value;
-                if(dE === ""){
+                if (dE === "") {
                     window.alert("Duración estimada no puede estar vacío");
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -87,7 +88,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Actividades</a></li>
+                        <li><a href="vistaActividades.jsp">Actividades</a></li>
                         <li class="active">Nueva Actividad</li>
                     </ol>
                 </section>
@@ -103,7 +104,13 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form role="form" action="Actividades" name="actividad" value="crearActividad" method="post">
+                                    <%
+                                        int idFase = (Integer) session.getAttribute("idFase");
+                                        boolean actualizar = (Boolean) session.getAttribute("actualizar");
+                                        int idActividad;
+                                        if (!actualizar) {
+                                    %>
+                                    <form role="form" action="Actividades?actividad=crearActividad&idFase=<%=idFase%>" name="actividad" value="crearActividad" method="post">
                                         <div class="box-body">
                                             <!-- textarea -->
                                             <div class="form-group">
@@ -154,6 +161,98 @@
                                         </div>
 
                                     </form>
+                                    <% } else {
+                                        idActividad = (Integer) session.getAttribute("idActividad");
+                                        Actividad a = (Actividad) session.getAttribute("actividad");
+                                    %> 
+                                    <form role="form" action="Actividades?actividad=actualizarActividad&idFase=<%=idFase%>&idActividad=<%= idActividad%>" name="actividad" value="actualizarActividad" method="post">
+                                        <div class="box-body">
+                                            <!-- textarea -->
+                                            <div class="form-group">
+                                                <label>Descripción de la actividad</label>
+                                                <textarea class="form-control" rows="3" name="descripcion"><%= a.getDescripcion()%></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Rol necesario</label>
+                                                <select class="form-control select2" style="width: 100%;" name="rol">
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("JP")) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="JP">Jefe de proyecto</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("AN")) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="AN">Analista</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("DI")) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="DI">Diseñador</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("AP")) { %>
+                                                        selected="selected" 
+                                                        <% }%>
+                                                        value="AP">Analista-programador</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("PR")) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="RP">Responsable equipo de pruebas</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("PG")) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="PG">Programador</option>
+                                                    <option 
+                                                        <% if (a.getRolNecesario().equals("PR")) { %>
+                                                        selected="selected" 
+                                                        <% }%>
+                                                        value="PR">Probador</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="duracionEstimadaActividad">Duración estimada de la actividad</label>
+                                                <input type="number" class="form-control" id="duracionEstimadaActividad" name="duracionEstimada" value="<%= a.getDuracionEstimada()%>">
+                                            </div>
+                                            <!-- Date range -->
+                                            <div class="form-group">
+                                                <label>Fecha de la actividad:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control pull-right" id="reservation" name="fechaInicioyFin" value="<%= a.getFechaInicio()%> - <%= a.getFechaFin()%>">
+                                                </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                            <div class="form-group">
+                                                <label>Estado</label>
+                                                <select class="form-control select2" style="width: 100%;" name="estado">
+                                                    <option 
+                                                        <% if (a.getEstado() == false) { %>
+                                                        selected="selected" 
+                                                        <% } %>
+                                                        value="false">No realizada</option>
+                                                    <option 
+                                                        <% if (a.getEstado() == true) { %>
+                                                        selected="selected" 
+                                                        <% }%>
+                                                        value="true">Realizada</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="duracionRealActividad">Duración real de la actividad</label>
+                                                <input type="number" class="form-control" id="duracionRealActividad" name="duracionReal" value="<%= a.getDuracionReal()%>">
+                                            </div>
+                                        </div><!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-primary" name="actualizarActividad" value="actualizarActividad" onclick="return validar()">Actualizar Actividad</button>
+                                            <a href=vistaActividades.jsp><button type="button" class="btn btn-default" name="cancelar" value="cancelar">Cancelar</button></a>
+                                        </div>
+
+                                    </form>
+                                    <% }%>
                                 </div><!-- /.col -->
                             </div><!-- /.row -->
                         </div><!-- /.box-body -->
@@ -194,14 +293,14 @@
         <script src="dist/js/demo.js"></script>
         <!-- Page script -->
         <script>
-            $(function () {
-                //Initialize Select2 Elements
-                $(".select2").select2();
+                                                $(function () {
+                                                    //Initialize Select2 Elements
+                                                    $(".select2").select2();
 
-                //Date range picker
-                $('#reservation').daterangepicker();
+                                                    //Date range picker
+                                                    $('#reservation').daterangepicker();
 
-            });
+                                                });
         </script>
     </body>
 </html>

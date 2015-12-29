@@ -66,18 +66,32 @@
                             <div class="box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Lista de actividades</h3>
-
+                                    <div class="pull-right">
+                                        <small class="text-red">No realizada.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-green">Realizada.</small>
+                                    </div>
                                 </div>
                                 <div class="box-body no-padding">
                                     <%
                                         int idFase = (Integer) session.getAttribute("idFase");
                                         ArrayList<Actividad> actividades = (ArrayList<Actividad>) session.getAttribute("actividades");
+                                        String colorClase = "";
                                         for (Actividad a : actividades) {
                                     %>
                                     <ul class="nav nav-pills nav-stacked">
                                         <div class="btn pull-left">
-                                            <i class="fa fa-file-text-o"></i> <%= a.getDescripcion()%>
-                                            <small> <%= a.getFechaComienzo()%> - <%= a.getFechaFin()%>  </small>
+                                            <a href="Actividades?actividad=actualizarUnaActividad&idFase=<%=idFase%>&idActividad=<%=a.getIdentificador()%>">
+                                                <% if (a.getEstado()) {
+                                                        colorClase = "text-green";
+                                                    } else {
+                                                        colorClase = "text-red";
+                                                    }
+                                                %>
+                                                <div class="<%=colorClase%>">
+                                                    <i class="fa fa-file-text-o"></i> <%= a.getDescripcion()%>
+                                                    <small> <%= a.getFechaInicio()%> - <%= a.getFechaFin()%>  </small>
+                                                </div>
+                                            </a>
                                         </div>
                                     </ul>
                                     <%

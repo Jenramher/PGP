@@ -7,31 +7,30 @@ package Business;
 
 import Data.ProyectoDB;
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 
 /**
  *
  * @author andreaescribano
  */
-public class Proyecto{
+public class Proyecto implements Serializable {
 
     private int identificador;
     private String nombre;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private char estado;
     private String login;
 
-    public Proyecto(String nombre, Date fechaInicio, Date fechaFin, char estado, String login) {
+    public Proyecto(String nombre, String fechaInicio, String fechaFin, char estado, String login) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estado = estado;
         this.login = login;
     }
-    
-    public Proyecto(int identificador, String nombre, Date fechaInicio, Date fechaFin, char estado, String login) {
+
+    public Proyecto(int identificador, String nombre, String fechaInicio, String fechaFin, char estado, String login) {
         this.identificador = identificador;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
@@ -48,11 +47,11 @@ public class Proyecto{
         return nombre;
     }
 
-    public Date getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
 
@@ -63,13 +62,21 @@ public class Proyecto{
     public String getLogin() {
         return login;
     }
-    
-    public static void guardarNuevoProyecto(String nombre, Date fechaInicio, Date fechaFin, char estado, String usuario) {
-        ProyectoDB.insert(new Proyecto(nombre, fechaInicio, fechaFin, estado, usuario));
+
+    public static void guardarNuevoProyecto(Proyecto p) {
+        ProyectoDB.insert(p);
     }
-    
+
     public static ArrayList<Proyecto> getProyectos(String usuario) {
         return ProyectoDB.selectProyectos(usuario);
+    }
+
+    public static Proyecto getProject(int idProyecto) {
+        return ProyectoDB.selectProyecto(idProyecto);
+    }
+
+    public static void actualizarProyecto(Proyecto p) {
+        ProyectoDB.updateProyecto(p);
     }
 
     

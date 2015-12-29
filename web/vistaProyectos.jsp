@@ -62,37 +62,56 @@
                             <div class="box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Lista de proyectos</h3>
+                                    <div class="pull-right">
+                                        <small class="text-light-blue">Sin comenzar.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-red">En curso.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-yellow">Finalizado.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-muted">Cerrado.</small>
+                                    </div>
                                 </div>
                                 <div class="box-body no-padding">
                                     <%
-                                            String usuario = (String) session.getAttribute("usuario");
-                                            ArrayList<Proyecto> proyectos = (ArrayList<Proyecto>) session.getAttribute("proyectos");
-                                            for (Proyecto p : proyectos) {
+                                        String usuario = (String) session.getAttribute("usuario");
+                                        ArrayList<Proyecto> proyectos = (ArrayList<Proyecto>) session.getAttribute("proyectos");
+                                        String colorClase = "";
+                                        for (Proyecto p : proyectos) {
                                     %>
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
                                             <div class="margin">
                                                 <div class="btn pull-left">
-                                                    <i class="fa fa-file-text-o"></i> <%= p.getNombre()%>
-                                                    <small> <%= p.getFechaInicio()%> - <%= p.getFechaFin()%>  </small>
+                                                    <a href="Proyectos?proyecto=actualizarUnProyecto&usuario=<%=usuario%>&idProyecto=<%= p.getIdentificador()%>">
+                                                        <% if (p.getEstado() == 'S') {
+                                                                colorClase = "text-light-blue";
+                                                            } else if (p.getEstado() == 'E') {
+                                                                colorClase = "text-red";
+                                                            } else if (p.getEstado() == 'F') {
+                                                                colorClase = "text-yellow";
+                                                            } else if (p.getEstado() == 'C') {
+                                                                colorClase = "text-muted";
+                                                            }
+                                                        %>
+                                                        <div class="<%=colorClase%>">
+                                                            <i class="fa fa-file-text-o"></i> <b><%= p.getNombre()%></b>
+                                                            <small> <%= p.getFechaInicio()%> - <%= p.getFechaFin()%>  </small>
+                                                        </div>
                                                 </div>
                                                 <div class="btn pull-right">
-                                                    <a href="Fases?fase=verFases&idProyecto=<%= p.getIdentificador() %>"><button type="button" class="btn btn-default">Fases</button></a>
+                                                    <a href="Fases?fase=verFases&idProyecto=<%= p.getIdentificador()%>"><button type="button" class="btn btn-default">Fases</button></a>
                                                 </div>
                                             </div>
                                         </li>
 
                                     </ul>
                                     <%
-                                }
+                                        }
                                     %>
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
-                                    <a class="btn btn-app" href="Proyectos?proyecto=crearNuevoProyecto&usuario=<%= usuario %>">
+                                    <a class="btn btn-app" href="Proyectos?proyecto=crearNuevoProyecto&usuario=<%= usuario%>">
                                         <i class="fa fa-edit"></i> Nuevo Proyecto
                                     </a>
                                 </div>
-
                             </div><!-- /. box -->
                         </div><!-- /.row -->
                 </section><!-- /.content -->

@@ -65,23 +65,42 @@
                             <div class="box box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Lista de fases</h3>
-
+                                    <div class="pull-right">
+                                        <small class="text-light-blue">Sin comenzar.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-red">En curso.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-yellow">Finalizado.</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <small class="text-muted">Cerrado.</small>
+                                    </div>
                                 </div>
                                 <div class="box-body no-padding">
                                     <%
                                         int idProyecto = (Integer) session.getAttribute("idProyecto");
                                         ArrayList<Fase> fases = (ArrayList<Fase>) session.getAttribute("fases");
+                                        String colorClase = "";
                                         for (Fase f : fases) {
                                     %>
                                     <ul class="nav nav-pills nav-stacked">
                                         <li>
                                             <div class="margin">
                                                 <div class="btn pull-left">
-                                                    <i class="fa fa-file-text-o"></i> <%= f.getNombre()%>
-                                                    <small> <%= f.getFechaInicio()%> - <%= f.getFechaFin()%>  </small>
+                                                    <a href="Fases?fase=actualizarUnaFase&idProyecto=<%=idProyecto%>&idFase=<%= f.getId()%>">
+                                                        <% if (f.getEstado() == 'S') {
+                                                                colorClase = "text-light-blue";
+                                                            } else if (f.getEstado() == 'E') {
+                                                                colorClase = "text-red";
+                                                            } else if (f.getEstado() == 'F') {
+                                                                colorClase = "text-yellow";
+                                                            } else if (f.getEstado() == 'C') {
+                                                                colorClase = "text-muted";
+                                                            }
+                                                        %>
+                                                        <div class="<%=colorClase%>">
+                                                            <i class="fa fa-file-text-o"></i> <%= f.getNombre()%>
+                                                            <small> <%= f.getFechaInicio()%> - <%= f.getFechaFin()%>  </small>
+                                                        </div>
                                                 </div>
                                                 <div class="btn pull-right">
-                                                    <a href="Actividades?actividad=verActividades&idFase=<%= f.getId() %>"><button type="button" class="btn btn-default">Actividades</button></a>
+                                                    <a href="Actividades?actividad=verActividades&idFase=<%= f.getId()%>"><button type="button" class="btn btn-default">Actividades</button></a>
                                                 </div>
                                             </div>
                                         </li>

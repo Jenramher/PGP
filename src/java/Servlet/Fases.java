@@ -45,41 +45,67 @@ public class Fases extends HttpServlet {
             String accion = request.getParameter("fase");
             if (accion != null) {
                 if (accion.equals("crearFase")) {
-                    String nombre = request.getParameter("nombre");
-                    String fechaInicioyFin = request.getParameter("fechaInicioyFin");
-                    String s = "";
-                    boolean encontrado = false;
-                    int i = 0;
-                    while (i < fechaInicioyFin.length() && !encontrado) {
-                        if (fechaInicioyFin.charAt(i) != ' ') {
-                            s += fechaInicioyFin.charAt(i);
-                        } else {
-                            encontrado = true;
-                        }
-                        i++;
-                    }
-                    String t = fechaInicioyFin.substring(i + 2);
-
-                    char estado = request.getParameter("estado").charAt(0);
-
-                    Fase.crearNuevaFase(idProyecto, nombre, getFecha(s), getFecha(t), estado);
-                    url = "/vistaFases.jsp";
+                    Fase.crearNuevaFase(getFaseFromParameters(request, idProyecto, 0));
+                    url = getFases(sesion, idProyecto);
                 } else if (accion.equals("verFases")) {
+                    url = getFases(sesion, idProyecto);
+                } else if (accion.equals("crearNuevaFase")) {
                     ArrayList<Fase> fases = Fase.getFase(idProyecto);
+                    sesion.setAttribute("numFase", fases.size() + 1);
                     sesion.setAttribute("idProyecto", idProyecto);
-                    sesion.setAttribute("fases", fases);
-                    url = "/vistaFases.jsp";
-                }else if(accion.equals("crearNuevaFase")){
-                    ArrayList<Fase> fases = Fase.getFase(idProyecto);
-                    sesion.setAttribute("numFase", fases.size()+1);
+                    sesion.setAttribute("actualizar", false);
                     url = "/fase.jsp";
+                } else if(accion.equals("actualizarUnaFase")){
+                    int idFase = Integer.parseInt(request.getParameter("idFase"));
+                    sesion.setAttribute("idProyecto", idProyecto);
+                    sesion.setAttribute("actualizar", true);
+                    sesion.setAttribute("idFase", idFase);
+                    Fase f = Fase.getPhase(idFase);
+                    sesion.setAttribute("fase", f);
+                    url = "/fase.jsp";
+                }else if(accion.equals("actualizarFase")){
+                    int idFase = Integer.parseInt(request.getParameter("idFase"));
+                    Fase.actualizarFase(getFaseFromParameters(request, idProyecto, idFase));
+                    url = getFases(sesion, idProyecto);
                 }
-                
+
                 RequestDispatcher respuesta = getServletContext().getRequestDispatcher(url);
                 respuesta.forward(request, response);
             }
         }
 
+    }
+
+    private Fase getFaseFromParameters(HttpServletRequest request, int idProyecto, int idFase) {
+        String nombre = request.getParameter("nombre");
+        String fechaInicioyFin = request.getParameter("fechaInicioyFin");
+        String fechaInicio = "";
+        boolean encontrado = false;
+        int i = 0;
+        while (i < fechaInicioyFin.length() && !encontrado) {
+            if (fechaInicioyFin.charAt(i) != ' ') {
+                fechaInicio += fechaInicioyFin.charAt(i);
+            } else {
+                encontrado = true;
+            }
+            i++;
+        }
+        String fechaFin = fechaInicioyFin.substring(i + 2);
+
+        char estado = request.getParameter("estado").charAt(0);
+
+        if(idFase == 0){
+            return new Fase(nombre, fechaInicio, fechaFin, estado, idProyecto);
+        }else{
+            return new Fase(idFase, nombre, fechaInicio, fechaFin, estado, idProyecto);
+        }
+    }
+
+    private String getFases(HttpSession sesion, int idProyecto) {
+        ArrayList<Fase> fases = Fase.getFase(idProyecto);
+        sesion.setAttribute("idProyecto", idProyecto);
+        sesion.setAttribute("fases", fases);
+        return "/vistaFases.jsp";
     }
 
     private Date getFecha(String s) {
