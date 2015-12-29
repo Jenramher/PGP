@@ -16,16 +16,20 @@ import java.util.ArrayList;
 public class Actividad implements Serializable{
 
     private int identificador;
+    private String login;
     private String descripcion;
     private String rolNecesario;
     private int duracionEstimada;
+    private String fechaComienzo;
     private String fechaInicio;
     private String fechaFin;
     private int duracionReal;
     private boolean estado;
     private int idFase;
 
-    public Actividad(String descripcion, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
+
+    public Actividad(String descripcion, String login, String rolNecesario, int duracionEstimada, String fechaComienzo, String fechaFin, int duracionReal, boolean estado, int idFase) {
+
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
         this.duracionEstimada = duracionEstimada;
@@ -34,9 +38,12 @@ public class Actividad implements Serializable{
         this.duracionReal = duracionReal;
         this.estado = estado;
         this.idFase = idFase;
+        this.login=login;
     }
 
-    public Actividad(int identificador, String descripcion, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
+
+    public Actividad(int identificador, String login, String descripcion, String rolNecesario, int duracionEstimada, String fechaComienzo, String fechaFin, int duracionReal, boolean estado, int idFase) {
+
         this.identificador = identificador;
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
@@ -46,6 +53,7 @@ public class Actividad implements Serializable{
         this.duracionReal = duracionReal;
         this.estado = estado;
         this.idFase = idFase;
+        this.login=login;
     }
 
     public int getIdentificador() {
@@ -64,6 +72,10 @@ public class Actividad implements Serializable{
         return duracionEstimada;
     }
 
+    public String getFechaComienzo() {
+        return fechaComienzo;
+    }
+    
     public String getFechaInicio() {
         return fechaInicio;
     }
@@ -88,10 +100,28 @@ public class Actividad implements Serializable{
     public int getIdFase() {
         return idFase;
     }
+    
+     public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    /*QUE ALGUIEN CORRIJA ESTO XD
+    public static void guardarNuevaActividad(String descripcion, String rol, int duracionEstimada, Date fechaInicio, Date fechaFin, int duracionReal, boolean estado, int idFase) {
+        ActividadBD.insert(new Actividad(descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase));
+    }*/
 
     public static void guardarNuevaActividad(Actividad a) {
         ActividadBD.insertActividad(a);
     }
+
 
     public static ArrayList<Actividad> getFase(int idFase) {
         return ActividadBD.selectActividades(idFase);   
