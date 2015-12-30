@@ -7,11 +7,7 @@ package Servlet;
 
 import Business.Actividad;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,18 +36,20 @@ public class Actividades extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
         int idFase = Integer.parseInt(request.getParameter("idFase"));
+        String usuario = /*(String) sesion.getAttribute("usuario")*/ "jefe_1";
         String url = null;
         if (idFase != 0) {
             String accion = request.getParameter("actividad");
             if (accion != null) {
                 if (accion.equals("crearActividad")) {
-                    Actividad.guardarNuevaActividad(getActividadFromParameters(request, 0, idFase));
-                    url = getActividades(idFase, sesion);
+                    Actividad.guardarNuevaActividad(getActividadFromParameters(request, 0, idFase, usuario));
+                    url = getActividades(idFase, sesion, usuario);
                 } else if (accion.equals("verActividades")) {
-                    url = getActividades(idFase, sesion);
+                    url = getActividades(idFase, sesion, usuario);
                 } else if (accion.equals("crearNuevaActividad")) {
                     sesion.setAttribute("idFase", idFase);
                     sesion.setAttribute("actualizar", false);
+                    sesion.setAttribute("usuario", usuario);
                     url = "/actividad.jsp";
                 } else if (accion.equals("actualizarUnaActividad")) {
                     int idActividad = Integer.parseInt(request.getParameter("idActividad"));
@@ -60,11 +58,12 @@ public class Actividades extends HttpServlet {
                     sesion.setAttribute("idActividad", idActividad);
                     Actividad a = Actividad.getActivity(idActividad);
                     sesion.setAttribute("actividad", a);
+                    sesion.setAttribute("usuario", usuario);
                     url = "/actividad.jsp";
                 } else if(accion.equals("actualizarActividad")){
                     int idActividad = Integer.parseInt(request.getParameter("idActividad"));
-                    Actividad.actualizarActividad(getActividadFromParameters(request, idActividad, idFase));
-                    url = getActividades(idFase, sesion);
+                    Actividad.actualizarActividad(getActividadFromParameters(request, idActividad, idFase, usuario));
+                    url = getActividades(idFase, sesion, usuario);
                 }
                 RequestDispatcher respuesta = getServletContext().getRequestDispatcher(url);
                 respuesta.forward(request, response);
@@ -73,7 +72,7 @@ public class Actividades extends HttpServlet {
 
     }
 
-    private Actividad getActividadFromParameters(HttpServletRequest request, int idActividad, int idFase) {
+    private Actividad getActividadFromParameters(HttpServletRequest request, int idActividad, int idFase, String usuario) {
         String descripcion = request.getParameter("descripcion");
         String rol = request.getParameter("rol");
         int duracionEstimada = Integer.parseInt(request.getParameter("duracionEstimada"));
@@ -92,28 +91,22 @@ public class Actividades extends HttpServlet {
         String fechaFin = fechaInicioyFin.substring(i + 2);
         boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
         int duracionReal = 0;
-        if (!request.getParameter("duracionReal").equals("") && !request.getParameter("duracionReal").equals(null)) {
+        if (!request.getParameter("duracionReal").equals("") && request.getParameter("duracionReal") != null) {
             duracionReal = Integer.parseInt(request.getParameter("duracionReal"));
         }
         if(idActividad == 0){
-            return new Actividad(descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase);
+            return new Actividad(usuario, descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase);
         }else{
-            return new Actividad(idActividad, descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase);
+            return new Actividad(idActividad, usuario, descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase);
         }
     }
 
-    private String getActividades(int idFase, HttpSession sesion) {
+    private String getActividades(int idFase, HttpSession sesion, String usuario) {
         ArrayList<Actividad> actividades = Actividad.getFase(idFase);
         sesion.setAttribute("idFase", idFase);
         sesion.setAttribute("actividades", actividades);
+        sesion.setAttribute("usuario", usuario);
         return "/vistaActividades.jsp";
-    }
-
-    private Date getFecha(String s) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse(s, formatter);
-
-        return new Date(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

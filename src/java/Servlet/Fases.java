@@ -7,11 +7,7 @@ package Servlet;
 
 import Business.Fase;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +36,7 @@ public class Fases extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sesion = request.getSession();
         int idProyecto = Integer.parseInt(request.getParameter("idProyecto"));
+        String usuario = /*(String) sesion.getAttribute("usuario")*/ "jefe_1";
         String url = null;
         if (idProyecto != 0) {
             String accion = request.getParameter("fase");
@@ -106,13 +103,6 @@ public class Fases extends HttpServlet {
         sesion.setAttribute("idProyecto", idProyecto);
         sesion.setAttribute("fases", fases);
         return "/vistaFases.jsp";
-    }
-
-    private Date getFecha(String s) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse(s, formatter);
-
-        return new Date(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

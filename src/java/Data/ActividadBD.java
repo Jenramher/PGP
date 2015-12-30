@@ -31,7 +31,8 @@ public class ActividadBD {
         diaFin = fechaFin[0];
         mesFin = fechaFin[1];
         anoFin = fechaFin[2];
-        String query = "INSERT INTO Actividades (descripcion, rol, duracionEstimada, diaInicio, mesInicio, anoInicio, diaFin, mesFin, anoFin, duracionReal, estado, idFase) VALUES ('"
+        String query = "INSERT INTO Actividades (login, descripcion, rol, duracionEstimada, diaInicio, mesInicio, anoInicio, diaFin, mesFin, anoFin, duracionReal, estado, idFase) VALUES ('"
+                + actividad.getLogin() + "','"
                 + actividad.getDescripcion() + "','"
                 + actividad.getRolNecesario() + "',"
                 + actividad.getDuracionEstimada() + ","
@@ -67,9 +68,9 @@ public class ActividadBD {
             ps.setInt(1, idFase);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(5), rs.getInt(6),rs.getInt(7));
-                String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(8), rs.getInt(9),rs.getInt(10));
-                Actividad a = new Actividad(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), fechaInicio, fechaFin, rs.getInt(11), rs.getBoolean(12), idFase);
+                String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(6), rs.getInt(7),rs.getInt(8));
+                String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(9), rs.getInt(10),rs.getInt(11));
+                Actividad a = new Actividad(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), fechaInicio, fechaFin, rs.getInt(12), rs.getBoolean(13), idFase);
                 actividades.add(a);
             }
             rs.close();
@@ -93,9 +94,9 @@ public class ActividadBD {
             ps.setInt(1, idActividad);
             rs = ps.executeQuery();
             if (rs.next()) {
-                String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(6), rs.getInt(5),rs.getInt(7));
-                String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(9), rs.getInt(8),rs.getInt(10));
-                a = new Actividad(idActividad, rs.getString(2), rs.getString(3), rs.getInt(4), fechaInicio, fechaFin, rs.getInt(11), rs.getBoolean(12), rs.getInt(13));
+                String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(7), rs.getInt(6),rs.getInt(8));
+                String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(10), rs.getInt(9),rs.getInt(11));
+                a = new Actividad(idActividad, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), fechaInicio, fechaFin, rs.getInt(12), rs.getBoolean(13), rs.getInt(14));
             }
             rs.close();
             ps.close();
@@ -118,7 +119,9 @@ public class ActividadBD {
             ps.setString(1, login);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Actividad a = new Actividad(rs.getInt(1), login,rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9));
+                String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(6), rs.getInt(7),rs.getInt(8));
+                String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(9), rs.getInt(10),rs.getInt(11));
+                Actividad a = new Actividad(rs.getInt(1), login, rs.getString(3), rs.getString(4), rs.getInt(5), fechaInicio, fechaFin, rs.getInt(12), rs.getBoolean(13), rs.getInt(14));
                 actividades.add(a);
             }
             rs.close();
@@ -143,22 +146,23 @@ public class ActividadBD {
         diaFin = fechaFin[0];
         mesFin = fechaFin[1];
         anoFin = fechaFin[2];
-        String query = "UPDATE Actividades SET descripcion=?, rol=?, duracionEstimada=?, diaInicio=?, mesInicio=?, anoInicio=?, diaFin=?, mesFin=?, anoFin=?, duracionReal=?, estado=?, idFase=? WHERE id=?";
+        String query = "UPDATE Actividades SET login=?, descripcion=?, rol=?, duracionEstimada=?, diaInicio=?, mesInicio=?, anoInicio=?, diaFin=?, mesFin=?, anoFin=?, duracionReal=?, estado=?, idFase=? WHERE id=?";
         try {
             ps = connection.prepareStatement(query);
-            ps.setString(1, a.getDescripcion());
-            ps.setString(2, a.getRolNecesario());
-            ps.setInt(3, a.getDuracionEstimada());
-            ps.setInt(4, diaInicio);
-            ps.setInt(5, mesInicio);
-            ps.setInt(6, anoInicio);
-            ps.setInt(7, diaFin);
-            ps.setInt(8, mesFin);
-            ps.setInt(9, anoFin);
-            ps.setInt(10, a.getDuracionReal());
-            ps.setBoolean(11, a.getEstado());
-            ps.setInt(12, a.getIdFase());
-            ps.setInt(13, a.getIdentificador());
+            ps.setString(1, a.getLogin());
+            ps.setString(2, a.getDescripcion());
+            ps.setString(3, a.getRolNecesario());
+            ps.setInt(4, a.getDuracionEstimada());
+            ps.setInt(5, diaInicio);
+            ps.setInt(6, mesInicio);
+            ps.setInt(7, anoInicio);
+            ps.setInt(8, diaFin);
+            ps.setInt(9, mesFin);
+            ps.setInt(10, anoFin);
+            ps.setInt(11, a.getDuracionReal());
+            ps.setBoolean(12, a.getEstado());
+            ps.setInt(13, a.getIdFase());
+            ps.setInt(14, a.getIdentificador());
             ps.executeUpdate();
             ps.close();
             pool.freeConnection(connection);

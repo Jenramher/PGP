@@ -107,7 +107,7 @@ public class Calendario {
         try {
             java.util.Date fechaI = formatter.parse(cal.getFechaInicio());
             java.util.Date fechaF = formatter.parse(cal.getFechaFin());
-            java.util.Date fechaIA = formatter.parse(a.getFechaComienzo());
+            java.util.Date fechaIA = formatter.parse(a.getFechaInicio());
             java.util.Date fechaFA = formatter.parse(a.getFechaFin());
             if (fechaFA.compareTo(fechaI) < 0) {
                 return true;

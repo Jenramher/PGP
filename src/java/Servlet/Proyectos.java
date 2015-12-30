@@ -7,11 +7,7 @@ package Servlet;
 
 import Business.Proyecto;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -102,14 +98,6 @@ public class Proyectos extends HttpServlet {
         sesion.setAttribute("proyectos", proyectos);
         return "/vistaProyectos.jsp";
     }
-
-    private Date getFecha(String s) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse(s, formatter);
-
-        return new Date(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

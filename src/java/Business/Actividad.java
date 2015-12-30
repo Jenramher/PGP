@@ -20,7 +20,6 @@ public class Actividad implements Serializable{
     private String descripcion;
     private String rolNecesario;
     private int duracionEstimada;
-    private String fechaComienzo;
     private String fechaInicio;
     private String fechaFin;
     private int duracionReal;
@@ -28,7 +27,7 @@ public class Actividad implements Serializable{
     private int idFase;
 
 
-    public Actividad(String descripcion, String login, String rolNecesario, int duracionEstimada, String fechaComienzo, String fechaFin, int duracionReal, boolean estado, int idFase) {
+    public Actividad(String descripcion, String login, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
 
         this.descripcion = descripcion;
         this.rolNecesario = rolNecesario;
@@ -42,7 +41,7 @@ public class Actividad implements Serializable{
     }
 
 
-    public Actividad(int identificador, String login, String descripcion, String rolNecesario, int duracionEstimada, String fechaComienzo, String fechaFin, int duracionReal, boolean estado, int idFase) {
+    public Actividad(int identificador, String login, String descripcion, String rolNecesario, int duracionEstimada, String fechaInicio, String fechaFin, int duracionReal, boolean estado, int idFase) {
 
         this.identificador = identificador;
         this.descripcion = descripcion;
@@ -72,10 +71,6 @@ public class Actividad implements Serializable{
         return duracionEstimada;
     }
 
-    public String getFechaComienzo() {
-        return fechaComienzo;
-    }
-    
     public String getFechaInicio() {
         return fechaInicio;
     }
@@ -113,15 +108,9 @@ public class Actividad implements Serializable{
         this.estado = estado;
     }
 
-    /*QUE ALGUIEN CORRIJA ESTO XD
-    public static void guardarNuevaActividad(String descripcion, String rol, int duracionEstimada, Date fechaInicio, Date fechaFin, int duracionReal, boolean estado, int idFase) {
-        ActividadBD.insert(new Actividad(descripcion, rol, duracionEstimada, fechaInicio, fechaFin, duracionReal, estado, idFase));
-    }*/
-
     public static void guardarNuevaActividad(Actividad a) {
         ActividadBD.insertActividad(a);
     }
-
 
     public static ArrayList<Actividad> getFase(int idFase) {
         return ActividadBD.selectActividades(idFase);   

@@ -73,6 +73,7 @@
                                 </div>
                                 <div class="box-body no-padding">
                                     <%
+                                        String usuario = (String) session.getAttribute("usuario");
                                         int idFase = (Integer) session.getAttribute("idFase");
                                         ArrayList<Actividad> actividades = (ArrayList<Actividad>) session.getAttribute("actividades");
                                         String colorClase = "";
