@@ -23,7 +23,7 @@
             </select>
             </br>
             <label>Tipo de tarea</label>
-            <select name="tipo">
+            <select name="tipoT">
                 <option value="TU"> Trato con Usuarios </option>
                 <option value="RE"> Reuniones Externas </option>
                 <option value="RI"> Reuniones Internas </option>

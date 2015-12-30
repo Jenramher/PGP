@@ -20,19 +20,22 @@ public class Calendario {
     private String fechaFin;
     private String usuario;
     private String tipo;
+    private String tipoT;
 
     public Calendario() {
         this.fechaInicio = "";
         this.fechaFin = "";
         this.usuario = "";
         this.tipo = "";
+        this.tipoT="";
     }
 
-    public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo) {
+    public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo, String tipoT) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.usuario = usuario;
         this.tipo = tipo;
+        this.tipoT=tipoT;
     }
 
     public String getFechaInicio() {
@@ -65,6 +68,14 @@ public class Calendario {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getTipoT() {
+        return tipoT;
+    }
+
+    public void setTipoT(String tipoT) {
+        this.tipoT = tipoT;
     }
 
     public long comprobarDiasVacaciones(List<Calendario> cal) {
@@ -100,7 +111,8 @@ public class Calendario {
         return true;
     }
 
-    /*date1.comparetp(date2) > 0 --> date1 esta después de date2
+    /*Esto no va bien... Investigando
+    date1.comparetp(date2) > 0 --> date1 esta después de date2
      date1.comparetp(date2) < 0 --> date1 esta antes de date2*/
     public boolean comprobarRangosEntreFechas(Actividad a, Calendario cal) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

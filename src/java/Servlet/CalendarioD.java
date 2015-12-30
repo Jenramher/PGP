@@ -42,12 +42,14 @@ public class CalendarioD extends HttpServlet {
         String mensaje = "";
         String login = request.getParameter("login");
         String tipo = request.getParameter("tipo");
+        String tipoT = request.getParameter("tipoT");
         String fechaI = request.getParameter("fechaI");
         String fechaF = request.getParameter("fechaF");
 
         Calendario c = new Calendario();
         c.setUsuario(login);
         c.setTipo(tipo);
+        c.setTipoT(tipoT);
         c.setFechaInicio(fechaI);
         c.setFechaFin(fechaF);       
         
