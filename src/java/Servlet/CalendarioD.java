@@ -59,11 +59,11 @@ public class CalendarioD extends HttpServlet {
             //Comprobaciones de un evento tipo Vacaciones
 
             //Primero obtener de la base de datos las fechas de vacaciones del usuario
-            List<Calendario> list = new ArrayList<Calendario>();
-            list = CalendarioDB.obtenerVacaciones(login);
+            List<Calendario> vacaciones = new ArrayList<Calendario>();
+            vacaciones = CalendarioDB.obtenerVacaciones(login);
 
             //Comprobar cuantos días lleva de vacaciones
-            long dias = c.comprobarDiasVacaciones(list);
+            long dias = c.comprobarDiasVacaciones(vacaciones);
 
             //Días de vacaciones que ha solicitado
             List<Calendario> nuevo = new ArrayList<Calendario>();
@@ -79,13 +79,21 @@ public class CalendarioD extends HttpServlet {
             List<Actividad> actividades = new ArrayList<Actividad>();
             actividades = ActividadBD.selectActividades(login);
             for(int i=0;i<actividades.size();i++){
-                if(!c.comprobarRangosEntreFechas(actividades.get(i), c)){
-                    mensaje="No puedes asignar vacaciones en ese día porque ya tienes actividades asignadas";
+                if(!c.comprobarRangosEntreFechas(actividades.get(i).getFechaInicio(),actividades.get(i).getFechaFin(), c)){
+                    mensaje="No puedes asignar vacaciones en ese día porque ya tienes actividades asignadas en esas fechas";
                 }
             }
             
             //Comprobar que en esas fechas no tenga ya vacaciones asignadas
+            for(int i=0;i<vacaciones.size();i++){
+                if(!c.comprobarRangosEntreFechas(vacaciones.get(i).getFechaInicio(),vacaciones.get(i).getFechaFin(), c)){
+                    mensaje="No puedes asignar vacaciones en ese día porque ya tienes vacaciones asignadas en esas fechas";
+                }
+            }
             
+            //Si ha superado todos los pasos --> puede asignar vacaciones en las fechas que introdujo
+            if(mensaje.equals(""))
+                mensaje="¡Todo correcto! Puedes asignar el rango de fechas "+fechaI+" --> "+fechaF+" como días de vacaciones";
             
             try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
