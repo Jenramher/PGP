@@ -35,7 +35,7 @@ public class CalendarioDB {
             ps.setString(1, login);
             rs = ps.executeQuery();
             while (rs.next()) {
-                    Calendario cal = new Calendario(rs.getString(1),rs.getString(2),login,rs.getString(4),rs.getString(5),rs.getInt(6));
+                    Calendario cal = new Calendario(rs.getString(1),rs.getString(2),login,rs.getString(4));
                     calendario.add(cal);
             }
             rs.close();

@@ -32,6 +32,13 @@ public class Calendario {
         this.duracion=0;
     }
 
+    public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo) {
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.usuario = usuario;
+        this.tipo = tipo;
+    }
+    
     public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo, String tipoT, int duracion) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -122,10 +129,24 @@ public class Calendario {
         return true;
     }
 
-    /*Esto no va bien... Investigando
-    date1.comparetp(date2) > 0 --> date1 esta después de date2
+    /*date1.comparetp(date2) > 0 --> date1 esta después de date2
      date1.comparetp(date2) < 0 --> date1 esta antes de date2*/
     public boolean comprobarRangosEntreFechas(Actividad a, Calendario cal) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            java.util.Date fechaI = formatter.parse(cal.getFechaInicio());
+            java.util.Date fechaF = formatter.parse(cal.getFechaFin());
+            java.util.Date fechaIA = formatter.parse(a.getFechaInicio());
+            java.util.Date fechaFA = formatter.parse(a.getFechaFin());
+            if (fechaI.compareTo(fechaFA) < 0 && fechaF.compareTo(fechaIA) > 0)
+                return false;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    
+    public boolean comprobarRangosEntreVacaciones(Actividad a, Calendario cal) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.util.Date fechaI = formatter.parse(cal.getFechaInicio());

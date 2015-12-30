@@ -119,10 +119,10 @@ public class ActividadBD {
             ps.setString(1, login);
             rs = ps.executeQuery();
             while (rs.next()) {
-                //String fechaInicio = String.format("%02d/%02d/%04d", rs.getInt(6), rs.getInt(7),rs.getInt(8));
-                //String fechaFin = String.format("%02d/%02d/%04d", rs.getInt(9), rs.getInt(10),rs.getInt(11));
-                //Actividad a = new Actividad(rs.getInt(1), login, rs.getString(3), rs.getString(4), rs.getInt(5), fechaInicio, fechaFin, rs.getInt(12), rs.getBoolean(13), rs.getInt(14));
-                Actividad a = new Actividad(rs.getInt(1), login, rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getBoolean(8), rs.getInt(10));
+                String fechaInicio = String.format("%04d-%02d-%02d", rs.getInt(8), rs.getInt(7),rs.getInt(6));
+                String fechaFin = String.format("%04d-%02d-%02d", rs.getInt(11), rs.getInt(10),rs.getInt(9));
+                Actividad a = new Actividad(rs.getInt(1), login, rs.getString(3), rs.getString(4), rs.getInt(5), fechaInicio, fechaFin, rs.getInt(12), rs.getBoolean(13), rs.getInt(14));
+                //Actividad a = new Actividad(rs.getInt(1), login, rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getBoolean(8), rs.getInt(10));
                 actividades.add(a);
             }
             rs.close();
