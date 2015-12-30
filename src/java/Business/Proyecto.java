@@ -17,52 +17,33 @@ public class Proyecto implements Serializable{
 
     private int identificador;
     private String nombre;
-    private int diaInicio;
-    private int mesInicio;
-    private int anoInicio;
-    private int diaFin;
-    private int mesFin;
-    private int anoFin;
+    private String fechaInicio;
+    private String fechaFin;
     private char estado;
     private String login;
 
-    public Proyecto(String nombre,int diaInicio, int mesInicio, int anoInicio,
-            int diaFin, int mesFin, int anoFin, String login) {
+    public Proyecto(String nombre,String fechaInicio, String fechaFin, String login) {
        this.nombre=nombre;
-       this.diaInicio=diaInicio;
-       this.mesInicio=mesInicio;
-       this.anoInicio=anoInicio;
-       this.diaFin=diaFin;
-       this.mesFin=mesFin;
-       this.anoFin=anoFin;
+       this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
        this.login=login;
        this.estado='S';
        
     }
     
-    public Proyecto(String nombre,int diaInicio, int mesInicio, int anoInicio,
-            int diaFin, int mesFin, int anoFin, char estado ,String login) {
+    public Proyecto(String nombre,String fechaInicio, String fechaFin, char estado ,String login) {
            this.nombre=nombre;
-           this.diaInicio=diaInicio;
-           this.mesInicio=mesInicio;
-           this.anoInicio=anoInicio;
-           this.diaFin=diaFin;
-           this.mesFin=mesFin;
-           this.anoFin=anoFin;
+           this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
            this.login=login;
            this.estado=estado;
     }
     
-    public Proyecto(int identificador, String nombre,int diaInicio, int mesInicio, int anoInicio,
-            int diaFin, int mesFin, int anoFin, char estado ,String login) {
+    public Proyecto(int identificador, String nombre,String fechaInicio, String fechaFin, char estado ,String login) {
            this.identificador=identificador;
             this.nombre=nombre;
-           this.diaInicio=diaInicio;
-           this.mesInicio=mesInicio;
-           this.anoInicio=anoInicio;
-           this.diaFin=diaFin;
-           this.mesFin=mesFin;
-           this.anoFin=anoFin;
+           this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
            this.login=login;
            this.estado=estado;
     }
@@ -75,28 +56,12 @@ public class Proyecto implements Serializable{
        return nombre;
    }
    
-   public int getDiaInicio(){
-       return diaInicio;
+   public String getFechaInicio(){
+       return fechaInicio;
    }
    
-   public int getMesInicio(){
-       return mesInicio;
-   }
-   
-   public int getAnoInicio(){
-       return anoInicio;
-   }
-   
-   public int getDiaFin(){
-       return diaFin;
-   }
-   
-   public int getMesFin(){
-       return mesFin;
-   }
-   
-   public int getAnoFin(){
-       return anoFin;
+   public String getFechaFin(){
+       return fechaFin;
    }
 
     public char getEstado() {
@@ -107,13 +72,24 @@ public class Proyecto implements Serializable{
         return login;
     }
     
-    public static void guardarNuevoProyecto(String nombre, int diaInicio, int mesInicio, int anoInicio,
-            int diaFin, int mesFin, int anoFin, char estado, String login) {
-        ProyectoDB.insert(new Proyecto(nombre, diaInicio, mesInicio, anoInicio, diaFin, mesFin, anoFin, estado, login));
+    public static void guardarNuevoProyecto(String nombre, String fechaInicio, String fechaFin, char estado, String login) {
+        ProyectoDB.insert(new Proyecto(nombre, fechaInicio, fechaFin, estado, login));
+    }
+    
+    public static void guardarNuevoProyecto(Proyecto p){
+        ProyectoDB.insert(p);
     }
     
     public static ArrayList<Proyecto> getProyectos(String usuario) {
         return ProyectoDB.selectProyectos(usuario);
+    }
+    
+    public static Proyecto getProject(int idProyecto){
+        return ProyectoDB.selectProyecto(idProyecto);
+    }
+    
+    public static void actualizarProyecto(Proyecto p){
+        ProyectoDB.updateProyecto(p);
     }
 
     

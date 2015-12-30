@@ -15,91 +15,56 @@ import java.util.ArrayList;
  */
 public class Fase implements Serializable{
 
-    private int identificador;
+    private int id;
     private String nombre;
-    private int diaInicio;
-    private int mesInicio;
-    private int anoInicio;
-    private int diaFin;
-    private int mesFin;
-    private int anoFin;
+    private String fechaInicio;
+    private String fechaFin;
     private char estado;
     private int idProyecto;
 
-   public Fase (String nombre, int diaInicio, int mesInicio, int anoInicio,
-           int diaFin, int mesFin, int anoFin, int idProyecto){
+   public Fase (String nombre, String fechaInicio, String fechaFin, int idProyecto){
        this.nombre=nombre;
-       this.diaInicio=diaInicio;
-       this.mesInicio=mesInicio;
-       this.anoInicio=anoInicio;
-       this.diaFin=diaFin;
-       this.mesFin=mesFin;
-       this.anoFin=anoFin;
+       this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
        this.idProyecto=idProyecto;
        this.estado='S';
        
    }
    
-   public Fase (String nombre, int diaInicio, int mesInicio, int anoInicio,
-           int diaFin, int mesFin, int anoFin,char estado, int idProyecto){
+   public Fase (String nombre, String fechaInicio, String fechaFin ,char estado, int idProyecto){
        this.nombre=nombre;
-       this.diaInicio=diaInicio;
-       this.mesInicio=mesInicio;
-       this.anoInicio=anoInicio;
-       this.diaFin=diaFin;
-       this.mesFin=mesFin;
-       this.anoFin=anoFin;
+       this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
        this.idProyecto=idProyecto;
        this.estado=estado;
        
    }
    
-   public Fase (int identificador, String nombre, int diaInicio, int mesInicio, int anoInicio,
-           int diaFin, int mesFin, int anoFin,char estado, int idProyecto){
-       this.identificador=identificador;
+   public Fase (int id, String nombre, String fechaInicio, String fechaFin ,char estado, int idProyecto){
+       this.id=id;
        this.nombre=nombre;
-       this.diaInicio=diaInicio;
-       this.mesInicio=mesInicio;
-       this.anoInicio=anoInicio;
-       this.diaFin=diaFin;
-       this.mesFin=mesFin;
-       this.anoFin=anoFin;
+       this.fechaInicio=fechaInicio;
+       this.fechaFin=fechaFin;
        this.idProyecto=idProyecto;
        this.estado=estado;
        
    }
 
-    public int getIdentificador() {
-        return identificador;
+    public int getId() {
+        return id;
     }
     
     public String getNombre() {
         return nombre;
     }
     
-    public int getDiaInicio(){
-        return diaInicio;
-    }
-    
-    public int getMesInicio(){
-        return mesInicio;
-    }
-    
-    public int getAnoInicio(){
-        return anoInicio;
-    }
-    
-    public int getDiaFin(){
-        return diaFin;
-    }
-    
-    public int getMesFin(){
-        return mesFin;
-    }
-    
-    public int getAnoFin(){
-        return anoFin;
-    }
+   public String getFechaInicio(){
+       return fechaInicio;
+   }
+   
+   public String getFechaFin(){
+       return fechaFin;
+   }
 
     public char getEstado() {
         return estado;
@@ -109,13 +74,24 @@ public class Fase implements Serializable{
         return idProyecto;
     }
     
-    public static void crearNuevaFase(int idProyecto, String nombre,int diaInicio, int mesInicio, int anoInicio,
-           int diaFin, int mesFin, int anoFin, char estado) {
-        FaseDB.insert(new Fase(nombre, diaInicio, mesInicio, anoInicio, diaFin, mesFin, anoFin, estado, idProyecto));
+    public static void crearNuevaFase(int idProyecto, String nombre,String fechaInicio, String fechaFin, char estado) {
+        FaseDB.insert(new Fase(nombre, fechaInicio, fechaFin, estado, idProyecto));
+    }
+    
+    public static void crearNuevaFase(Fase f){
+        FaseDB.insert(f);
     }
     
     public static ArrayList<Fase> getFase(int idProyecto) {
         return FaseDB.selectFases(idProyecto);
     }
+    
+    public static Fase getPhase(int idFase) {		
+        return FaseDB.selectFase(idFase);		
+    }		
+ 		
+     public static void actualizarFase(Fase f) {		
+         FaseDB.updateFase(f);		
+     }
 
 }
