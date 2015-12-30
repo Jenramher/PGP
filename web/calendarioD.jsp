@@ -36,6 +36,9 @@
                 <option value="FA"> Formación de Otras Actividades </option>
             </select>
             </br>
+            <label>Duración</label>
+            <input type="number" name="duracion">
+            </br>
             <!--Añadir comprobador de que la fecha de Inicio va antes que la del Fin-->
             <label>Fecha de inicio</label>
             <input type="text" name="fechaI" data-mask>

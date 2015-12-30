@@ -21,6 +21,7 @@ public class Calendario {
     private String usuario;
     private String tipo;
     private String tipoT;
+    private int duracion;
 
     public Calendario() {
         this.fechaInicio = "";
@@ -28,14 +29,16 @@ public class Calendario {
         this.usuario = "";
         this.tipo = "";
         this.tipoT="";
+        this.duracion=0;
     }
 
-    public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo, String tipoT) {
+    public Calendario(String fechaInicio, String fechaFin, String usuario, String tipo, String tipoT, int duracion) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.usuario = usuario;
         this.tipo = tipo;
         this.tipoT=tipoT;
+        this.duracion=duracion;
     }
 
     public String getFechaInicio() {
@@ -76,6 +79,14 @@ public class Calendario {
 
     public void setTipoT(String tipoT) {
         this.tipoT = tipoT;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
 
     public long comprobarDiasVacaciones(List<Calendario> cal) {
@@ -121,15 +132,14 @@ public class Calendario {
             java.util.Date fechaF = formatter.parse(cal.getFechaFin());
             java.util.Date fechaIA = formatter.parse(a.getFechaInicio());
             java.util.Date fechaFA = formatter.parse(a.getFechaFin());
-            if (fechaFA.compareTo(fechaI) < 0) {
-                return true;
-            } else if (fechaIA.compareTo(fechaF) > 0) {
-                return true;
-            }
+            System.out.println("fechaFA: "+a.getFechaFin()+" fechaI: "+cal.getFechaInicio());
+            System.out.println("fechaIA: "+a.getFechaInicio()+" fechaF: "+cal.getFechaFin());
+            if (fechaI.compareTo(fechaFA) < 0 && fechaF.compareTo(fechaIA) > 0)
+                return false;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
 }

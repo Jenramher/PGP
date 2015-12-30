@@ -43,6 +43,7 @@ public class CalendarioD extends HttpServlet {
         String login = request.getParameter("login");
         String tipo = request.getParameter("tipo");
         String tipoT = request.getParameter("tipoT");
+        String duracion = request.getParameter("duracion");
         String fechaI = request.getParameter("fechaI");
         String fechaF = request.getParameter("fechaF");
 
@@ -79,9 +80,11 @@ public class CalendarioD extends HttpServlet {
             actividades = ActividadBD.selectActividades(login);
             for(int i=0;i<actividades.size();i++){
                 if(!c.comprobarRangosEntreFechas(actividades.get(i), c)){
-                    mensaje="No puedes asignar vacaciones en ese día porque ya tienes tareas asignadas";
+                    mensaje="No puedes asignar vacaciones en ese día porque ya tienes actividades asignadas";
                 }
             }
+            
+            //Comprobar que en esas fechas no tenga ya vacaciones asignadas
             
             try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
